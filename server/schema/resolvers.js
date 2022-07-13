@@ -26,9 +26,6 @@ function transactionStatusChecker(MockDataArray, filterTransactionStatus) {
 const resolvers = {
 	Query: {
 		transactions: (parent, args) => {
-			console.log(args);
-			// console.log(Object.keys(args), "asdasd");
-
 			if (args === {}) {
 				return MockData;
 			}
