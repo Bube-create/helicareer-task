@@ -109,9 +109,28 @@ const TransactionsPage = () => {
 
 	function extraInputSubmitHandler(e) {
 		e.preventDefault();
-		fetchTransactions({
-			variables: { filter: { ...extraFilter } },
-		});
+
+		let currentActiveNetWork;
+		const networks = filter;
+		for (let net in networks) {
+			if (networks[net] === true && net !== "ALL") {
+				currentActiveNetWork = net;
+			}
+		}
+		if (currentActiveNetWork) {
+			fetchTransactions({
+				variables: {
+					filter: { ...extraFilter, network: currentActiveNetWork },
+				},
+			});
+		} else {
+			fetchTransactions({
+				variables: {
+					filter: { ...extraFilter },
+				},
+			});
+		}
+
 		setModalToggle(false);
 	}
 
@@ -121,6 +140,8 @@ const TransactionsPage = () => {
 			variables: { filter: { network: "ALL" } },
 		});
 		setSearchInput("");
+		setFilter({ ...networkOptions });
+
 		setModalToggle(false);
 	}
 
